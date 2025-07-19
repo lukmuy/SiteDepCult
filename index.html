@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DepCult</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+</head> 
+<body>
+    <header>
+        <img src="/fotos/logo.png" alt="Logo" class="logo" />
+        <div class="titulo">Depcult</div>
+
+        <form id="search-form" onsubmit="handleSearch(event)">
+            <input type="text" id="search-input" placeholder="Buscar..." />
+            <button type="submit">🔍</button>
+        </form>
+
+        <nav>
+            <!--pra adicionar uma rota nova, segue o padrão ai tlgd-->
+    
+            <a href="/" onclick="navigate(event, '/')">Home</a>
+            <a href="/historia" onclick="navigate(event, '/historia')">História</a>
+            <a href="/loja" onclick="navigate(event, '/loja')">Loja</a>
+            <a href="/musica" onclick="navigate(event, '/musica')">Musica</a>
+            <a href="/eventos" onclick="navigate(event, '/eventos')">Eventos</a>
+            <a href="/contato" onclick="navigate(event, '/contato')">Contato</a>
+    
+        </nav>
+    </header>
+    <div id="content"></div>
+
+    <footer>
+        <p>Departamento Cultural do ITA - DepCult
+
+        </p>
+        <p>Nossas redes:
+            <br/>
+            <a href="https://www.instagram.com/ita_depcult/" target="_blank"> 
+                <img class="instagram" src="./fotos/instagram.png">
+            </a>
+            <a href="https://www.linkedin.com/company/departamento-cultural-do-ita/?originalSubdomain=br" target="_blank"> 
+                <img class="instagram" src="./fotos/linkedin.png">
+            </a>
+            <a href="https://www.facebook.com/DepCultITA/" target="_blank"> 
+                <img class="instagram" src="./fotos/facebook.png">
+            </a>
+        </p>
+        <p>"A arte existe porque a vida não basta"-Ferreira Gullar</p>
+        <br/>
+        <p>Copyright © 2025 Depcult</p>
+    </footer>
+
+    <!-- Script movido para o final do body para garantir que o DOM seja carregado primeiro -->
+    <script src="script.js"></script>
+</body>
+</html>

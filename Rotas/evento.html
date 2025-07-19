@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - Departamento Cultural ITA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2C3E50;
+            --light: #F7F7F7;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 6rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #FFE66D 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(78, 205, 196, 0.7)); }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        /* Event Card */
+        .event-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: cardFadeIn 0.6s ease-out forwards;
+            cursor: pointer;
+        }
+
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.2s; }
+        .event-card:nth-child(3) { animation-delay: 0.3s; }
+        .event-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .event-card:nth-child(1) { --gradient: var(--gradient-1); }
+        .event-card:nth-child(2) { --gradient: var(--gradient-2); }
+        .event-card:nth-child(3) { --gradient: var(--gradient-3); }
+        .event-card:nth-child(4) { --gradient: var(--gradient-4); }
+
+        .event-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .event-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .event-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .event-card p {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .event-card .year {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: var(--accent);
+        }
+
+        /* Special styling for SAVS card */
+        .event-card.savs {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.05));
+        }
+
+        .savs-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .savs-link {
+            color: #4ECDC4;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .savs-link:hover {
+            color: #FFE66D;
+            transform: translateX(5px);
+        }
+
+        /* Floating elements */
+        .float-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: floatRandom 20s infinite ease-in-out;
+        }
+
+        .float-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .float-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 70%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .float-element:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes floatRandom {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -30px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            margin-top: 3rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FFE66D 0%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 300px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-caption p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Modal for full image view */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        /* Event images in cards */
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 1rem 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-card.savs {
+                grid-column: span 1;
+            }
+            
+            .savs-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-out 1s forwards;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Floating Elements -->
+    <div class="float-element"></div>
+    <div class="float-element"></div>
+    <div class="float-element"></div>
+
+    <!-- Main Content -->
+    <header>
+        <div class="container">
+            <nav style="text-align: center; padding: 1rem;">
+                <h3 style="color: var(--accent); font-weight: 300; letter-spacing: 2px;">DEPARTAMENTO CULTURAL ITA</h3>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Eventos</h1>
+                <p>Descubra os eventos que movimentam a cultura no ITA e conectam nossa comunidade através da arte, música, gastronomia e muito mais!</p>
+                
+                <!-- Stats Section -->
+                <div style="display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 2.5rem; color: var(--primary); margin: 0;" class="counter" data-target="35">68</h3>
+                        <p style="color: #ccc; margin: 0;">Anos de Tradição</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 2.5rem; color: var(--secondary); margin: 0;" class="counter" data-target="4">4</h3>
+                        <p style="color: #ccc; margin: 0;">Eventos Principais</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-size: 2.5rem; color: var(--accent); margin: 0;" class="counter" data-target="1000">+2000</h3>
+                        <p style="color: #ccc; margin: 0;">Participantes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="events-grid">
+                <!-- Arraiá -->
+                <div class="event-card">
+                    <div class="event-icon">🎪</div>
+                    <h2>Arraiá</h2>
+                    <p>A festa junina dos alunos do DCTA! Nascida em 2021 como ideia e realizada em 2022, trouxe de volta a tradição junina focada nos iteanos. Um evento leve e dinâmico que já atraiu mais de 300 pessoas, incluindo público externo, com muita música, dança e comidas típicas.</p>
+                    <span class="year">Desde 2022</span>
+                </div>
+
+                <!-- Encontro Musical -->
+                <div class="event-card">
+                    <div class="event-icon">🎸</div>
+                    <h2>Encontro Musical</h2>
+                    <p>Tradição do Departamento Cultural desde 1989! Com apresentações ao vivo de diversos estilos - do rock ao eletrônico - o evento promove integração e diversidade cultural. A oportunidade perfeita para tocar, cantar ou simplesmente curtir o som e vivenciar a música de um jeito único!</p>
+                    <span class="year">Desde 1989</span>
+                </div>
+
+                <!-- MasterChef H8 -->
+                <div class="event-card">
+                    <div class="event-icon">👨‍🍳</div>
+                    <h2>MasterChef H8</h2>
+                    <p>A maior competição culinária do ITA! Em sua primeira edição em 2025, contou com o vencedor do MasterChef Profissional 2022 como jurado. Uma confraternização deliciosa baseada no embate de sobremesas criadas pelos próprios alunos iteanos.</p>
+                    <span class="year">Desde 2025</span>
+                </div>
+
+                <!-- SAVS -->
+                <div class="event-card savs">
+                    <div class="event-icon">🎨</div>
+                    <div class="savs-content">
+                        <div>
+                            <h2>SAVS - Semana de Arte "Violeta Soffiatti"</h2>
+                            <p>Criada em 2002 em homenagem a Violeta, uma aluna do instituto, a SAVS promove diversas formas de expressão artística. Com vernissages, teatro, dança e shows, o evento cresceu ao longo dos anos, atraindo artistas renomados como Laís Bodansky e Blues Etílicos.</p>
+                            <p>Após uma pausa, foi resgatada em 2023 com três dias de espetáculos, workshops e música, honrando a memória de Violeta e mantendo vivo este importante legado cultural do ITA.</p>
+                            <a href="https://www.instagram.com/p/DEaP_O4x62c/?img_index=1" target="_blank" class="savs-link">
+                                Conheça a história de Violeta Soffiatti →
+                            </a>
+                        </div>
+                        <div>
+                            <span class="year">Desde 2002</span>
+                            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                                <strong>Destaques:</strong><br>
+                                • Vernissage dos artistas do H8<br>
+                                • Apresentações de teatro e dança<br>
+                                • Shows de jazz e música ao vivo<br>
+                                • Workshops artísticos<br>
+                                • Participação de artistas renomados
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                        <!-- Photo Gallery Section -->
+        <section class="photo-gallery">
+            <div class="container">
+                <h2 class="gallery-title">Momentos que Marcam</h2>
+                <!-- 
+                    NOTA: Para adicionar as imagens reais, substitua o atributo src="" dos elementos <img> abaixo 
+                    pelos caminhos das suas imagens. As imagens enviadas correspondem a:
+                    1. Arraiá - Foto com 3 pessoas na festa junina
+                    2. Encontro Musical - Foto do grupo em estilo TV retrô
+                    3. SAVS - Foto com pessoas fantasiadas
+                -->
+                <div class="gallery-grid">
+                    <!-- Arraiá Photo -->
+                    <div class="gallery-item" onclick="openModal('arraiaPhoto.jpg')">
+                        <img src="../fotos/arraia.png" xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23FFE66D'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='Arial' font-size='24' fill='%23333'%3EArraiá 2023%3C/text%3E%3C/svg%3E" alt="Arraiá DEPCULT">
+                        <div class="gallery-caption">
+                            <h3>Arraiá</h3>
+                            <p>A alegria da nossa festa junina em cada detalhe</p>
+                        </div>
+                    </div>
+
+                    <!-- Encontro Musical Photo -->
+                    <div class="gallery-item" onclick="openModal('encontroMusical.jpg')">
+                        <img src="../fotos/em.png" xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%234ECDC4'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='Arial' font-size='24' fill='white'%3EEncontro Musical%3C/text%3E%3C/svg%3E" alt="Encontro Musical">
+                        <div class="gallery-caption">
+                            <h3>Encontro Musical</h3>
+                            <p>Unidos pela música, conectados pela arte</p>
+                        </div>
+                    </div>
+
+                    <!-- SAVS Photo -->
+                    <div class="gallery-item" onclick="openModal('savs.jpg')">
+                        <img src="../fotos/savs121.png" xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23764ba2'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='Arial' font-size='24' fill='white'%3ESAVS 2024%3C/text%3E%3C/svg%3E" alt="SAVS">
+                        <div class="gallery-caption">
+                            <h3>SAVS</h3>
+                            <p>Arte e cultura se encontram em performances únicas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal for full image view -->
+        <div id="imageModal" class="modal" onclick="closeModal()">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modalImage">
+        </div>
+
+        <!-- Call to Action Section -->
+        <section style="padding: 4rem 0; text-align: center;">
+            <div class="container">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #fff;">Participe dos Nossos Eventos!</h2>
+                <p style="color: #ccc; font-size: 1.1rem; margin-bottom: 2rem;">Acompanhe o Departamento Cultural nas redes sociais e não perca nenhuma novidade</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#" style="display: inline-block; padding: 1rem 2rem; background: var(--gradient-1); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" 
+                       onmouseover="this.style.transform='translateY(-5px) scale(1.05)'" 
+                       onmouseout="this.style.transform='translateY(0) scale(1)'">
+                        Siga-nos no Instagram
+                    </a>
+                    <a href="#" style="display: inline-block; padding: 1rem 2rem; background: transparent; color: var(--accent); text-decoration: none; border-radius: 30px; font-weight: 600; border: 2px solid var(--accent); transition: all 0.3s ease;" 
+                       onmouseover="this.style.background='var(--accent)'; this.style.color='#000'" 
+                       onmouseout="this.style.background='transparent'; this.style.color='var(--accent)'">
+                        Saiba Mais
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.bg-animation');
+            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Card hover effect
+        const cards = document.querySelectorAll('.event-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+            });
+        });
+
+        // Modal functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Remove loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+            }, 1500);
+        });
+
+        // Animated counters
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const animate = () => {
+                    const value = +counter.getAttribute('data-target');
+                    const data = +counter.innerText;
+                    const time = value / speed;
+
+                    if (data < value) {
+                        counter.innerText = Math.ceil(data + time);
+                        setTimeout(animate, 1);
+                    } else {
+                        counter.innerText = value + '+';
+                    }
+                }
+                animate();
+            });
+        }
+
+        // Trigger counter animation when in viewport
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const heroSection = document.querySelector('.hero');
+        observer.observe(heroSection);
+
+        // Add hover effect to gallery items
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        galleryItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

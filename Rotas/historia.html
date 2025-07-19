@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História - DepCult ITA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b00, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(255,107,0,0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(255,107,0,0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .stat-item:nth-child(1) { animation-delay: 0.8s; }
+        .stat-item:nth-child(2) { animation-delay: 1s; }
+        .stat-item:nth-child(3) { animation-delay: 1.2s; }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6b00;
+            display: block;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Timeline Navigation */
+        .timeline-nav {
+            background: #1a1a2e;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .timeline-years {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .year-btn {
+            background: transparent;
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .year-btn:hover, .year-btn.active {
+            background: #ff6b00;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,107,0,0.4);
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #0f0f1e;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .filter-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .filter-tag {
+            background: rgba(255,107,0,0.1);
+            border: 1px solid rgba(255,107,0,0.3);
+            color: #ffa500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: rgba(255,107,0,0.3);
+            border-color: #ff6b00;
+            transform: scale(1.05);
+        }
+
+        /* Events Grid */
+        .events-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 20px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            animation: fadeInScale 0.6s ease forwards;
+        }
+
+        .event-card.hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,107,0,0.3);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,107,0,0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover .event-image {
+            transform: scale(1.1);
+        }
+
+        .event-info {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-year {
+            display: inline-block;
+            background: #ff6b00;
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .event-type {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #1a1a2e;
+            border-radius: 15px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Footer */
+        .history-footer {
+            background: #0a0a0a;
+            text-align: center;
+            padding: 3rem 20px;
+            border-top: 1px solid #333;
+        }
+
+        .footer-text {
+            color: #aaa;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-cta {
+            display: inline-block;
+            background: #ff6b00;
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .footer-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,0,0.4);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats {
+                gap: 2rem;
+            }
+            
+            .timeline-years {
+                gap: 1rem;
+            }
+            
+            .year-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Nossa História</h1>
+            <p class="hero-subtitle">Décadas de tradição cultural no ITA</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="35">68</span>
+                    <span class="stat-label">Anos de Tradição</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="500">+100</span>
+                    <span class="stat-label">Eventos Realizados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="50000">+2000</span>
+                    <span class="stat-label">Pessoas Impactadas</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="30" height="50" viewBox="0 0 30 50">
+                <rect x="10" y="10" width="10" height="20" rx="5" fill="none" stroke="#ff6b00" stroke-width="2"/>
+                <circle cx="15" cy="20" r="3" fill="#ff6b00">
+                    <animate attributeName="cy" from="15" to="25" dur="1s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Timeline Navigation -->
+    <nav class="timeline-nav">
+        <div class="timeline-years">
+            <button class="year-btn active" data-year="all">Todos</button>
+            <button class="year-btn" data-year="2004">2004</button>
+            <button class="year-btn" data-year="2008">2008</button>
+            <button class="year-btn" data-year="2009">2009</button>
+            <button class="year-btn" data-year="2010">2010</button>
+            <button class="year-btn" data-year="2011">2011</button>
+            <button class="year-btn" data-year="2013">2013</button>
+        </div>
+    </nav>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-tags">
+            <span class="filter-tag active" data-type="all">Todos</span>
+            <span class="filter-tag" data-type="musical">Musical</span>
+            <span class="filter-tag" data-type="cultural">Cultural</span>
+            <span class="filter-tag" data-type="teatro">Teatro</span>
+            <span class="filter-tag" data-type="cinema">Cinema</span>
+            <span class="filter-tag" data-type="debate">Debate</span>
+        </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="events-container">
+        <div class="events-grid">
+            <!-- 2004 Events -->
+            <div class="event-card" data-year="2004" data-type="cultural">
+                <img src="../fotos/bannerhome/SAVS2004.png" alt="SAVS 2004" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2004</span>
+                    <h3 class="event-title">III Semana de Arte</h3>
+                    <p class="event-type">Cultural</p>
+                    <p class="event-description">Semana dedicada a diversas manifestações artísticas, incluindo exposições, apresentações e workshops.</p>
+                </div>
+            </div>
+
+            <!-- 2008 Events -->
+            <div class="event-card" data-year="2008" data-type="cultural">
+                <img src="../fotos/bannerhome/biblita.png" alt="Biblita 2008" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2008</span>
+                    <h3 class="event-title">Cachaça na Biblita</h3>
+                    <p class="event-type">Cultural</p>
+                    <p class="event-description">Evento cultural realizado na biblioteca do ITA com apresentações e debates.</p>
+                </div>
+            </div>
+
+            <div class="event-card" data-year="2008" data-type="musical">
+                <img src="../fotos/bannerhome/EM2008.png" alt="Encontro Musical 2008" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2008</span>
+                    <h3 class="event-title">Encontro Musical</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Festival musical com bandas formadas por alunos do ITA e convidados especiais.</p>
+                </div>
+            </div>
+
+            <!-- 2009 Events -->
+            <div class="event-card" data-year="2009" data-type="musical">
+                <img src="../fotos/bannerhome/2009EM.png" alt="Encontro Musical 2009" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2009</span>
+                    <h3 class="event-title">Encontro Musical 2009</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Edição especial do Encontro Musical com Show-Prêmio no Dunluce Irish Pub.</p>
+                </div>
+            </div>
+
+            <!-- 2010 Events -->
+            <div class="event-card" data-year="2010" data-type="debate">
+                <img src="../fotos/bannerhome/2010.png" alt="Tererê com Platão 2010" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2010</span>
+                    <h3 class="event-title">Tererê com Platão</h3>
+                    <p class="event-type">Debate</p>
+                    <p class="event-description">Discussão sobre "Engenharia, eis a questão" - Carreira como Engenheiro e oportunidades após a formatura.</p>
+                </div>
+            </div>
+
+            <!-- 2011 Events -->
+            <div class="event-card" data-year="2011" data-type="musical">
+                <img src="../fotos/bannerhome/EM2011.png" alt="Encontro Musical 2011" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2011</span>
+                    <h3 class="event-title">Encontro Musical 2011</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Festival musical no Auditório Lacaz Neto com participação de diversas bandas.</p>
+                </div>
+            </div>
+
+            <div class="event-card" data-year="2011" data-type="musical">
+                <img src="../fotos/bannerhome/SHOW2011.png" alt="Show Prêmio 2011" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2011</span>
+                    <h3 class="event-title">Show Prêmio 2011</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Premiação dos melhores artistas do ano com apresentações ao vivo.</p>
+                </div>
+            </div>
+
+            <!-- 2013 Events -->
+            <div class="event-card" data-year="2013" data-type="musical">
+                <img src="../fotos/bannerhome/rock2013.png" alt="Rock in Rancho 2013" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">2013</span>
+                    <h3 class="event-title">Rock in Rancho</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Festival de rock com tributos a Metallica, Beatles, Foo Fighters e Arctic Monkeys.</p>
+                </div>
+            </div>
+
+            <!-- Special Events -->
+            <div class="event-card" data-year="all" data-type="musical">
+                <img src="../fotos/bannerhome/MELASMUSICAL.png" alt="Melas Musical" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">Especial</span>
+                    <h3 class="event-title">Melas Musical</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Show musical com apresentações de diversos estilos e gêneros musicais.</p>
+                </div>
+            </div>
+
+            <div class="event-card" data-year="all" data-type="cinema">
+                <img src="../fotos/bannerhome/CINEMAVIAGEM.png" alt="Cinema de Viagem" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">Especial</span>
+                    <h3 class="event-title">Cinema de Viagem</h3>
+                    <p class="event-type">Cinema</p>
+                    <p class="event-description">Mostra de filmes com temática de viagem e culturas ao redor do mundo.</p>
+                </div>
+            </div>
+
+            <div class="event-card" data-year="all" data-type="debate">
+                <img src="../fotos/bannerhome/mOCADO.png" alt="Mocados" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">Especial</span>
+                    <h3 class="event-title">Mocados</h3>
+                    <p class="event-type">Debate</p>
+                    <p class="event-description">Evento especial com palestras e debates sobre temas relevantes para a comunidade iteana.</p>
+                </div>
+            </div>
+
+            <div class="event-card" data-year="all" data-type="musical">
+                <img src="../fotos/bannerhome/SHOWPREMIO.png" alt="Show Prêmio" class="event-image">
+                <div class="event-info">
+                    <span class="event-year">Anual</span>
+                    <h3 class="event-title">Show Prêmio</h3>
+                    <p class="event-type">Musical</p>
+                    <p class="event-description">Tradicional premiação anual dos melhores artistas e apresentações do DepCult.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="eventModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-info">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="history-footer">
+        <p class="footer-text">Continue fazendo parte desta história</p>
+        <a href="#" class="footer-cta">Participe dos Próximos Eventos</a>
+    </footer>
+</body>
+</html>

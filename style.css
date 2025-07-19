@@ -1,0 +1,763 @@
+/* Estilos Gerais */
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Previne rolagem horizontal */
+}
+
+div {
+  padding: 10px;
+}
+
+/* Cabeçalho e Navegação */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(0, 0, 0);
+  padding: 2rem 1rem;
+  height: auto;
+  width: 100vw;
+  position: static;
+  left: -0px;
+  top: 0px;
+}
+
+.titulo {
+  color: aliceblue;
+  font-size: xx-large;
+  margin-right: 100;
+}
+
+nav {
+  margin-left: auto;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: background 0.3s;
+}
+
+nav a:hover {
+  font-size: 20px;
+}
+
+/* Formulário de Busca */
+form#search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 32px;
+}
+
+form#search-form input {
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+}
+
+form#search-form button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Conteúdo Principal */
+#content {
+  margin-top: 0px; /* para compensar a altura do cabeçalho fixo */
+  padding: 0px;
+}
+
+.logo {
+  width: 100px;
+}
+
+/* Rodapé */
+footer {
+  padding: 10px;
+  color: white;
+  background-color: black;
+  text-align: center;
+  font-size: 17px;
+}
+
+.instagram {
+  border-radius: 10px;
+  width: 30px;
+  height: auto;
+}
+
+/* Banner Rotativo da Loja */
+.menuloja-container {
+  margin: 50px;
+}
+
+.menuloja-slider {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.menuloja-slides {
+  width: 400%;
+  height: 100%;
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.menuloja-slide {
+  width: 25%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.menuloja-slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Sobreposição escura para melhorar a legibilidade do texto */
+}
+
+.menuloja-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  z-index: 1;
+}
+
+.menuloja-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.menuloja-content h2 {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 80%;
+}
+
+.menuloja-content a {
+  background-color: rgba(25, 47, 100);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  min-width: 250px;
+  padding: 10px 10px;
+  font-size: 18px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.menuloja-content a:hover {
+  background-color: rgba(35, 67, 140);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Indicadores de navegação */
+.menuloja-navigation {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+}
+
+.menuloja-nav-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menuloja-nav-btn.active {
+  background-color: white;
+  transform: scale(1.2);
+}
+
+/* HOME */
+.menuinicial {
+  display: flex;
+  flex-direction: column;  /* Empilha os elementos verticalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;     /* Centraliza horizontalmente */
+  position: relative;      /* Mantém o posicionamento relativo */
+  width: 100vw;
+  height: 750px;
+  background-image: url(./fotos/backadadad.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
+
+div.menuinicial h3 {
+  color: white;
+  text-align: center;   
+  font-size: 40px;
+  margin: 0 0 0 0;  /* Margem inferior para dar espaço entre os textos */
+}
+
+div.menuinicial h1 {
+  color: white;
+  text-align: center;
+  font-size: 150px;
+  margin: 0;
+  position: static;    
+}
+
+.declaracoes {
+  display: flex;
+  flex-direction: row;
+}
+
+.partedeclaracao {
+  width: 50%;
+}
+
+.fotodeclaracao {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.fotodeclaracao img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%; 
+}
+
+/* Seção Música */
+.musica {
+  height: 520px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./fotos/background\ photo.jpg);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+}
+
+.musica div {
+  width: 50%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente os elementos filhos */
+  text-align: center;
+  justify-content: center;
+}
+
+.musica h1 {
+  text-align: center;
+  color: #dbb144;
+  font-size: 40px;
+  font-weight: bolder;
+  padding: 0px;
+}
+
+.musica p {
+  color: white;
+  text-align: center;
+  font-size: 20px;
+}
+
+.musica a {
+  background-color: #dbb144;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  min-width: 250px;
+  padding: 10px 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.musica a:hover {
+  background-color: #c9a13b; /* Cor um pouco mais escura para o hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Seção História */
+.historia {
+  display: flex;
+  flex-direction: row;
+}
+
+.historia > div {
+  text-align: center;
+  width: 35%;
+}
+
+.historia a {
+  background-color: #2717d0;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  min-width: 250px;
+  padding: 10px 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.historia img {
+  border-radius: 10px;
+}
+
+/* Seção Eventos */
+.eventos {
+  display: flex;
+  flex-direction: row;
+  background-image: url(./fotos/savs.png);
+  background-color: rgba(25, 47, 100, 0.5); /* Cor preta com 50% de opacidade */
+  background-blend-mode: overlay; /* ou multiply, darken, etc. */
+  color: rgb(255, 255, 255);
+  text-align: center;
+  justify-content: center;
+}
+
+.eventos a {
+  background-color: rgba(25, 47, 100);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  min-width: 250px;
+  padding: 10px 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+div.as {
+  justify-content: right;
+  align-items: center;
+}
+
+.eventos img {
+  height: 300px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.eventos p {
+  font-size: 20px;
+}
+
+/* LOJA */
+.colecaosavs {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.colecaosavs h1 {
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.linha {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  gap: 120px;
+}
+
+.lojaitem {
+  flex: 0 0 300px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
+
+.lojaitem img {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid #ddd;
+}
+
+.lojaitem a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.lojaitem a.nomeitem {
+  display: block;
+  text-decoration: none;
+  margin: 8px 0 5px 10px;
+  font-weight: bold;
+  text-align: left;
+  font-size: 18px;
+}
+
+.preco {
+  font-weight: bold;
+  color: #333;
+  margin: 5px 0 0 10px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.lojaitem:hover {
+  transform: translateY(-5px);
+}
+
+.lojaitem a:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lojaitem a::after {
+  content: "Compra rápida";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  font-size: 16px;
+}
+
+.lojaitem a:hover::after {
+  transform: translateY(0);
+}
+
+.lojaitem a.nomeitem {
+  position: static;
+  overflow: visible;
+}
+
+.lojaitem a.nomeitem::after {
+  display: none;
+}
+
+/* Slider antigo (pode ser removido se não for usado) */
+.slider {
+  margin: 0 auto;
+  width: 800px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.slides {
+  height: 400px;
+  width: 400%;
+  display: flex;
+  transition: margin-left 0.8s ease;
+}
+
+.slides input {
+  display: none;
+}
+
+.slide {
+  width: 25%;
+  position: relative;
+}
+
+.slide img {
+  width: 800px;
+}
+
+.manual-navigation {
+  position: absolute;
+  width: 800px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: center;
+}
+
+.manual-btn {
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+  margin-right: 40px;
+}
+
+.manual-btn:hover {
+  background-color: white;
+}
+
+#radio1:checked~.first {
+  margin-left: 0;
+}
+
+#radio2:checked~.first {
+  margin-left: -25%;
+}
+
+#radio3:checked~.first {
+  margin-left: -50%;
+}
+
+#radio4:checked~.first {
+  margin-left: -75%;
+}
+
+/* CONTATOS */
+.gestaotitulo {
+  text-align: center;
+}
+
+.linhacontato {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 100px;
+  padding: 20px;
+}
+
+div.linhacontato div {
+  width: 50%;
+}
+
+.detalhes {
+  display: flex;
+  flex-direction: row;
+}
+
+.detalhes img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Aulas de Música */
+.menumusica {
+  display: flex;
+  align-items: center;
+  background-color: whitesmoke;
+  position: relative;
+  overflow: hidden;
+}
+
+.menumusica > div {
+  width: 50%;
+  margin-left: 35px;
+  z-index: 1;
+}
+
+.menumusica p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.menumusica h3 {
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  color: #444;
+  font-weight: 600;
+}
+
+.menumusica a {
+  display: inline-block;
+  background: linear-gradient(to right, #FF7043, #FF9800);
+  color: white;
+  min-width: 220px;
+  text-align: center;
+  border-radius: 30px;
+  font-weight: bold;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4);
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.menumusica li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.menumusica li::before {
+  content: "🎵";
+  position: absolute;
+  left: 0;
+  color: #FF7043;
+}
+
+.menumusica h1::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background-color: #FF7043;
+  bottom: -10px;
+  left: 0;
+}
+
+.menumusica ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.menumusica::before {
+  content: "";
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF9E80, #FF7043);
+  opacity: 0.15;
+  left: -350px;
+  top: -200px;
+  z-index: 0;
+}
+
+/* Segundo círculo para profundidade */
+.menumusica::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF7043, #FF9800);
+  opacity: 0.1;
+  right: -150px;
+  bottom: -150px;
+  z-index: 0;
+}
+
+.menumusica a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 112, 67, 0.6);
+}
+
+.music-icon {
+  position: absolute;
+  right: 10%;
+  top: 15%;
+  width: 300px;
+  height: 300px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3659/3659784.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .lojaitem {
+    flex: 0 0 calc(50% - 20px);
+  }
+  
+  .menumusica {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+  
+  .menumusica > div {
+    width: 90%;
+    margin-left: 0;
+  }
+  
+  .menumusica ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .music-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .menuloja-content h1 {
+    font-size: 2rem;
+  }
+  
+  .menuloja-content h2 {
+    font-size: 1rem;
+  }
+  
+  .menuloja-slider {
+    height: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .lojaitem {
+    flex: 0 0 100%;
+  } 
+  
+  .lojaitem a img {
+    height: 250px;
+  }
+  
+  .menuloja-container {
+    margin: 30px 20px;
+  }
+  
+  .menuloja-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .menuloja-content h2 {
+    font-size: 0.9rem;
+  }
+}
+
