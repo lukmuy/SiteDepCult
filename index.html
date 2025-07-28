@@ -3,57 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DepCult</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>DepCult - Departamento Cultural do ITA</title>
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="./fotos/logo.png" as="image">
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Estilos -->
     <link rel="stylesheet" href="style.css">
     
-</head> 
+    <!-- Meta tags para SEO e performance -->
+    <meta name="description" content="Departamento Cultural do ITA - Promovendo arte, música e cultura na comunidade acadêmica">
+    <meta name="keywords" content="DepCult, ITA, cultura, música, eventos, SAVS, EM">
+    <meta name="author" content="DepCult ITA">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./fotos/logo.png">
+</head>
 <body>
+    <!-- Header -->
     <header>
-        <img src="/fotos/logo.png" alt="Logo" class="logo" />
-        <div class="titulo">Depcult</div>
-
-        <form id="search-form" onsubmit="handleSearch(event)">
-            <input type="text" id="search-input" placeholder="Buscar..." />
-            <button type="submit">🔍</button>
-        </form>
-
-        <nav>
-            <!--pra adicionar uma rota nova, segue o padrão ai tlgd-->
-    
-            <a href="/" onclick="navigate(event, '/')">Home</a>
-            <a href="/historia" onclick="navigate(event, '/historia')">História</a>
-            <a href="/loja" onclick="navigate(event, '/loja')">Loja</a>
-            <a href="/musica" onclick="navigate(event, '/musica')">Musica</a>
-            <a href="/eventos" onclick="navigate(event, '/eventos')">Eventos</a>
-            <a href="/contato" onclick="navigate(event, '/contato')">Contato</a>
-    
-        </nav>
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="titulo">DepCult</div>
+            <nav>
+                <a href="/" onclick="navigate(event, '/')">Home</a>
+                <a href="/historia" onclick="navigate(event, '/historia')">História</a>
+                <a href="/loja" onclick="navigate(event, '/loja')">Loja</a>
+                <a href="/musica" onclick="navigate(event, '/musica')">Música</a>
+                <a href="/eventos" onclick="navigate(event, '/eventos')">Eventos</a>
+                <a href="/contato" onclick="navigate(event, '/contato')">Contato</a>
+            </nav>
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Buscar...">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
     </header>
-    <div id="content"></div>
 
+    <!-- Conteúdo Principal -->
+    <div id="content">
+        <!-- O conteúdo será carregado dinamicamente aqui -->
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <p>Departamento Cultural do ITA - DepCult
-
-        </p>
-        <p>Nossas redes:
-            <br/>
-            <a href="https://www.instagram.com/ita_depcult/" target="_blank"> 
-                <img class="instagram" src="./fotos/instagram.png">
-            </a>
-            <a href="https://www.linkedin.com/company/departamento-cultural-do-ita/?originalSubdomain=br" target="_blank"> 
-                <img class="instagram" src="./fotos/linkedin.png">
-            </a>
-            <a href="https://www.facebook.com/DepCultITA/" target="_blank"> 
-                <img class="instagram" src="./fotos/facebook.png">
-            </a>
-        </p>
-        <p>"A arte existe porque a vida não basta"-Ferreira Gullar</p>
-        <br/>
-        <p>Copyright © 2025 Depcult</p>
+        <div class="container">
+            <p>&copy; 2024 DepCult - Departamento Cultural do ITA. Todos os direitos reservados.</p>
+            <p>Siga-nos no <a href="https://www.instagram.com/depcult_ita/" class="instagram" target="_blank">Instagram</a></p>
+        </div>
     </footer>
 
-    <!-- Script movido para o final do body para garantir que o DOM seja carregado primeiro -->
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
