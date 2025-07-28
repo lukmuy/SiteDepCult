@@ -950,9 +950,33 @@ footer {
 
 .contact-item {
   background: #f8f9fa;
-  padding: 25px;
+  padding: 30px 25px;
   border-radius: 15px;
   text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff6b35, #f7931e);
+}
+
+.contact-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.contact-avatar {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  display: block;
 }
 
 .contact-name {
@@ -960,7 +984,7 @@ footer {
   font-weight: 700;
   color: #333;
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .contact-link {
@@ -968,11 +992,24 @@ footer {
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 25px;
+  background: rgba(255, 107, 53, 0.1);
+}
+
+.phone-icon {
+  font-size: 1.2rem;
 }
 
 .contact-link:hover {
   color: #f7931e;
+  background: rgba(255, 107, 53, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
 }
 
 /* Registration Section */
